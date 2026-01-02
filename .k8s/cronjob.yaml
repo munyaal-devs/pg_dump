@@ -4,7 +4,7 @@ metadata:
   name: ilogs-backup-s3
   namespace: utils
 spec:
-  schedule: "* * * * *"
+  schedule: "0 0 * * 0"
   failedJobsHistoryLimit: 1
   successfulJobsHistoryLimit: 1
   jobTemplate:
@@ -15,13 +15,12 @@ spec:
         metadata: {}
         spec:
           containers:
-            - image: registry.digitalocean.com/munyaal-docr/pg-backup-agent:65be9de
+            - image: registry.digitalocean.com/munyaal-docr/pg-backup-agent:86d823c
               name: ilogs-backup-s3
-              command: ["/usr/local/bin/backup.sh"]
               envFrom:
                 - secretRef:
                     name: aws-backup-secret
                 - secretRef:
-                    name: ilogs-backup-secret
+                    name: ilogs-datasource-secret
               resources: {}
           restartPolicy: OnFailure
