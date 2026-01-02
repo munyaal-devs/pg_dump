@@ -50,5 +50,5 @@ COPY --from=builder /dist/lib/ /usr/lib/
 # Copy scripts
 COPY --chmod=0755 ./scripts/*.sh /usr/local/bin/
 
-WORKDIR /usr/backups
-
+# Set the entrypoint
+ENTRYPOINT ["/busybox/sh", "/usr/local/bin/backup.sh"]

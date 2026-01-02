@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ilogs-backup-s3
+  namespace: utils
+spec:
+  schedule: "* * * * *"
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    metadata:
+      name: ilogs-backup-s3
+    spec:
+      template:
+        metadata: {}
+        spec:
+          containers:
+            - image: registry.digitalocean.com/munyaal-docr/pg-backup-agent:65be9de
+              name: ilogs-backup-s3
+              command: ["/usr/local/bin/backup.sh"]
+              envFrom:
+                - secretRef:
+                    name: aws-backup-secret
+                - secretRef:
+                    name: ilogs-backup-secret
+              resources: {}
+          restartPolicy: OnFailure
