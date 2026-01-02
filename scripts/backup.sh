@@ -20,7 +20,7 @@ DATE=$(date +%Y%m%d%H%M)
 DUMP_PATH="/tmp/${PGDATABASE}_${DATE}.dump"
 
 echo "📦 Iniciando respaldo de $PGDATABASE..."
-pg_dump -b -v -F c -d $PGDATABASE -f "$DUMP_PATH"
+pg_dump -b -v -O -x -F c -d $PGDATABASE -f "$DUMP_PATH"
 
 if [ $? -ne 0 ]; then
     echo "💀 Error al realizar el respaldo de $PGDATABASE"
